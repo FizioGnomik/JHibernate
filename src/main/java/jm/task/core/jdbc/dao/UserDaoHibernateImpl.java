@@ -8,7 +8,6 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserDaoHibernateImpl implements UserDao {
     public UserDaoHibernateImpl() {
     }
@@ -19,16 +18,17 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = Util.getSessionFactory().openSession()) {
         transaction = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS users " +
-                    "(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), last_name VARCHAR(255), age INT)").executeUpdate();
+                    "(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), last_name VARCHAR(100), age INT)").executeUpdate();
         transaction.commit();
         }
         catch (Exception e) {
             e.printStackTrace();
             if (null != transaction) {
                 transaction.rollback();
-    }
+            }
         }
     }
+    
     @Override
     public void dropUsersTable() {
         Transaction transaction = null;
